@@ -47,7 +47,6 @@ class _TarefasViewState extends State<TarefaView> {
           final tarefas =
               snapshot.data!; // O uso de '!' indica que 'tarefas' não é nulo.
 
-          // ListView.builder é um widget que constrói uma lista de forma eficiente, apenas criando os itens visíveis na tela.
           return ListView.builder(
             itemCount:
                 tarefas.length, // Define o número de itens (tarefas) na lista.
@@ -94,6 +93,7 @@ class _TarefasViewState extends State<TarefaView> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('Notas salvas com sucesso')),
           );
+          Navigator.pushReplacementNamed(context, '/buscar');
         },
       ),
     );

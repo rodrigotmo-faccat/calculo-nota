@@ -1,6 +1,7 @@
-# aula11_calc
+# calculo_nota
 
-A new Flutter project.
+Projeto Flutter de Cálculo de Nota da FACCAT para a disciplina de Desenvolvimento para Dispositivos Móveis.
+Autores: Rodrigo Teixeira, Luan Sananda.
 
 ## Getting Started
 

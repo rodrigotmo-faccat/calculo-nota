@@ -23,8 +23,16 @@ class TarefaPresenter {
   // Salvar notas no banco
   Future<void> salvarTarefas(List<Tarefa> tarefas) async {
     for (var tarefa in tarefas) {
-      tarefa.timestamp = DateTime.now();
+      tarefa.timestamp = DateTime.now().toIso8601String();
       await db.inserirTarefa(tarefa);
     }
+  }
+
+  Future<List<Tarefa>> buscarTarefaPorTitulo(String titulo) async {
+    final tarefas = await db.listarTarefas();
+    return tarefas
+        .where((tarefa) =>
+            tarefa.titulo.toLowerCase().contains(titulo.toLowerCase()))
+        .toList();
   }
 }

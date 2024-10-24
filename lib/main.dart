@@ -2,6 +2,7 @@ import 'package:aula11_calc/dao/tarefa_dao.dart';
 import 'package:aula11_calc/presenter/tarefa_presenter.dart';
 import 'package:aula11_calc/view/tarefa_view.dart';
 import 'package:flutter/material.dart';
+import 'package:aula11_calc/view/buscar_view.dart';
 
 void main() async {
   // Inicializa os bindings do Flutter para garantir que o framework esteja pronto
@@ -33,6 +34,9 @@ class MyApp extends StatelessWidget {
       ),
       // Define a tela inicial como TarefaView, passando o presenter
       home: TarefaView(presenter: tarefaPresenter),
+      routes: {
+        '/buscar': (context) => BuscarView(presenter: tarefaPresenter),
+      },
     );
   }
 }

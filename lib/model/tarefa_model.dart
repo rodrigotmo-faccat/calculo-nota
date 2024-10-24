@@ -4,7 +4,7 @@ class Tarefa {
   String periodo;
   double peso;
   double? nota;
-  DateTime? timestamp;
+  String? timestamp;
 
   Tarefa(
       {required this.tipo,
@@ -21,6 +21,8 @@ class Tarefa {
       titulo: json['titulo'],
       periodo: json['periodo'],
       peso: json['peso'].toDouble(),
+      nota: json['nota'],
+      timestamp: json['timestamp'],
     );
   }
 
@@ -32,7 +34,7 @@ class Tarefa {
       'periodo': periodo,
       'peso': peso,
       'nota': nota,
-      'timestamp': timestamp?.toIso8601String(),
+      'timestamp': timestamp,
     };
   }
 }
