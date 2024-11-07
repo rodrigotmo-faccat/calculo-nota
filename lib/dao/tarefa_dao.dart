@@ -73,4 +73,12 @@ class TarefaDao {
     // Converte cada registro em um objeto Tarefa e retorna a lista de tarefas
     return result.map((json) => Tarefa.fromJson(json)).toList();
   }
+
+  Future<List<Tarefa>> listarTarefaPorTitulo(String titulo) async {
+    final db = await instance.database;
+
+    final result = await db.rawQuery('SELECT * FROM tarefas WHERE titulo like ?', ['%$titulo%']);
+    
+    return result.map((json) => Tarefa.fromJson(json)).toList();
+  }
 }

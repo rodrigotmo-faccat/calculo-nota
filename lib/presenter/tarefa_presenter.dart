@@ -29,10 +29,8 @@ class TarefaPresenter {
   }
 
   Future<List<Tarefa>> buscarTarefaPorTitulo(String titulo) async {
-    final tarefas = await db.listarTarefas();
-    return tarefas
-        .where((tarefa) =>
-            tarefa.titulo.toLowerCase().contains(titulo.toLowerCase()))
-        .toList();
+    final tarefas = await db.listarTarefaPorTitulo(titulo);
+    
+    return tarefas;
   }
 }
