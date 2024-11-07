@@ -2,7 +2,7 @@ import 'package:aula11_calc/model/tarefa_model.dart';
 import 'package:aula11_calc/presenter/tarefa_presenter.dart';
 import 'package:flutter/material.dart';
 
-class BuscarView extends StatefulWidget {
+/* class BuscarView extends StatefulWidget {
   final TarefaPresenter presenter;
 
   BuscarView({required this.presenter});
@@ -59,4 +59,4 @@ class _BuscarViewState extends State<BuscarView> {
       ),
     );
   }
-}
+} */

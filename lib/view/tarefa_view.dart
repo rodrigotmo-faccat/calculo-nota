@@ -2,7 +2,12 @@ import 'package:aula11_calc/model/tarefa_model.dart';
 import 'package:aula11_calc/presenter/tarefa_presenter.dart';
 import 'package:flutter/material.dart';
 
-class TarefaView extends StatefulWidget {
+abstract class TarefaView {
+  void displayTarefas(List<Tarefa> tarefas);
+  void showError(String error);
+}
+
+/* class TarefaView extends StatefulWidget {
   final TarefaPresenter presenter;
 
   TarefaView({required this.presenter});
@@ -98,4 +103,4 @@ class _TarefasViewState extends State<TarefaView> {
       ),
     );
   }
-}
+} */
