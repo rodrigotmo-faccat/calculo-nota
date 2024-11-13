@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "325266960696",
+    "project_id": "app-calculadora-9add9",
+    "storage_bucket": "app-calculadora-9add9.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:325266960696:android:179779fc38f307488151cd",
+        "android_client_info": {
+          "package_name": "com.example.calc_nota"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBRwWEywTK94WjmaGhXyNGCOFpQ9OxKSfg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:325266960696:android:37cc1ff1a5cbe6388151cd",
+        "android_client_info": {
+          "package_name": "com.example.calc_nota"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBRwWEywTK94WjmaGhXyNGCOFpQ9OxKSfg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

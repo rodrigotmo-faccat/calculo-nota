@@ -1,38 +1,65 @@
 import 'dart:convert';
-import 'package:aula11_calc/dao/tarefa_dao.dart';
-import 'package:aula11_calc/model/tarefa_model.dart';
+import 'package:calc_nota/model/tarefa_model.dart';
+import 'package:calc_nota/view/tarefa_view.dart';
 import 'package:flutter/services.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class TarefaPresenter {
-  final TarefaDao db;
+  final TarefaView view;
+  final CollectionReference tarefasRef =
+      FirebaseFirestore.instance.collection('tarefas');
 
-  TarefaPresenter(this.db);
-
-  // Carregar JSON trasnformando em uma lista de tarefas
-  Future<List<Tarefa>> carregarTarefas() async {
-    final jsonString = await rootBundle.loadString('assets/notas.json');
-    final List<dynamic> jsonData = json.decode(jsonString);
-    return jsonData.map((item) => Tarefa.fromJson(item)).toList();
-  }
+  TarefaPresenter(this.view);
 
   // Calcular a nota final
   double calcularNotaFinal(List<Tarefa> tarefas) {
     return 0;
   }
 
-  // Salvar notas no banco
-  Future<void> salvarTarefas(List<Tarefa> tarefas) async {
-    for (var tarefa in tarefas) {
-      tarefa.timestamp = DateTime.now().toIso8601String();
-      await db.inserirTarefa(tarefa);
+  Future<void> fetchTarefasFirebase() async {
+    try {
+      QuerySnapshot snapshot =
+          await tarefasRef.orderBy('timestamp', descending: true).get();
+
+      List<Tarefa> tarefas = snapshot.docs.map((doc) {
+        return Tarefa.fromJson(doc.data() as Map<String, dynamic>, doc.id);
+      }).toList();
+
+      view.displayTarefas(tarefas);
+    } catch (e) {
+      // Captura exceções e exibe a mensagem de erro.
+      view.showError('Erro ao buscar dados: $e');
     }
   }
 
-  Future<List<Tarefa>> buscarTarefaPorTitulo(String titulo) async {
-    final tarefas = await db.listarTarefas();
-    return tarefas
-        .where((tarefa) =>
-            tarefa.titulo.toLowerCase().contains(titulo.toLowerCase()))
-        .toList();
+  Future<void> addTarefaFirebase(Tarefa tarefa) async {
+    try {
+      print("Salvando tarefa no Firestore: ${tarefa.toJson()}");
+      await tarefasRef.add(tarefa.toJson());
+
+      fetchTarefasFirebase();
+    } catch (e) {
+      // Captura exceções e exibe a mensagem de erro.
+      view.showError('Erro ao adicionar tarefa: $e');
+    }
+  }
+
+  Future<void> updateTarefa(String id, Tarefa tarefa) async {
+    try {
+      await tarefasRef.doc(id).update(tarefa.toJson());
+    } catch (e) {
+      view.showError('Erro ao atualizar tarefa: $e');
+    }
+  }
+
+  Future<void> deleteTarefaFirebase(String id) async {
+    try {
+      await tarefasRef.doc(id).delete();
+
+      fetchTarefasFirebase();
+    } catch (e) {
+      // Captura exceções e exibe a mensagem de erro.
+      view.showError('Erro ao deletar tarefa: $e');
+    }
   }
 }

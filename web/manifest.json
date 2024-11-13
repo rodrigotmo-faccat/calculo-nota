@@ -1,6 +1,6 @@
 {
-    "name": "aula11_calc",
-    "short_name": "aula11_calc",
+    "name": "calc_nota",
+    "short_name": "calc_nota",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

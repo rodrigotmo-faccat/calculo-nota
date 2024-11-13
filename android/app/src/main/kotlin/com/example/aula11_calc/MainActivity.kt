@@ -1,4 +1,4 @@
-package com.example.aula11_calc
+package com.example.calc_nota
 
 import io.flutter.embedding.android.FlutterActivity
 
