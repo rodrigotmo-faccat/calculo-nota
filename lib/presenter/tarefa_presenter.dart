@@ -44,9 +44,10 @@ class TarefaPresenter {
     }
   }
 
-  Future<void> updateTarefa(String id, Tarefa tarefa) async {
+  Future<void> updateTarefa(String id, double nota) async {
     try {
-      await tarefasRef.doc(id).update(tarefa.toJson());
+      await tarefasRef.doc(id).update({"nota": nota});
+      fetchTarefasFirebase();
     } catch (e) {
       view.showError('Erro ao atualizar tarefa: $e');
     }

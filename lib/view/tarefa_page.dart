@@ -11,6 +11,7 @@ class TarefaPage extends StatefulWidget {
 
 class _TarefaPageState extends State<TarefaPage> implements TarefaView {
   late TarefaPresenter presenter;
+  double notaTarefa = 0;
 
   List<Tarefa> tarefas = [];
 
@@ -56,24 +57,7 @@ class _TarefaPageState extends State<TarefaPage> implements TarefaView {
           ),
         ),
         /* actions: [
-          // Botão para adicionar uma nova tarefa
-          IconButton(
-            icon: const Icon(Icons.add,
-                color: Colors.black), // Ícone preto no estilo minimalista
-            onPressed: () async {
-              // Abre a tela de cadastro
-              bool? tarefaAdicionada = await Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => TarefaFormPage(presenter: presenter),
-                ),
-              );
-
-              if (tarefaAdicionada == true) {
-                presenter.fetchTarefasFirebase();
-              }
-            },
-          ),
+          
         ], */
       ),
       floatingActionButton: FloatingActionButton(
@@ -91,61 +75,102 @@ class _TarefaPageState extends State<TarefaPage> implements TarefaView {
         },
         child: const Icon(Icons.add),
       ),
-
-      backgroundColor: Colors.white, // Fundo branco para uma estética clean
+      backgroundColor: Colors.white,
       body: errorMessage.isEmpty
           ? ListView.builder(
-              itemCount: tarefas.length, // Número de itens na lista
+              itemCount: tarefas.length,
               itemBuilder: (context, index) {
                 return Card(
-                    margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                    elevation: 3, // Elevação para dar profundidade aos cards
+                    margin: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 20),
+                    elevation: 3,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(
-                          15), // Bordas arredondadas no estilo moderno
+                      borderRadius: BorderRadius.circular(15),
                     ),
                     child: Column(
                       children: [
-                        ListTile(
-                          contentPadding:
-                              EdgeInsets.all(16), // Espaçamento interno no card
-                          leading: CircleAvatar(
-                            backgroundColor: Colors.blueAccent,
-                            child: Text(
-                              tarefas[index].periodo,
-                              style: const TextStyle(color: Colors.white),
-                            ),
-                          ),
-                          title: Text(
-                            tarefas[index].titulo,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
-                              color: Colors.black,
-                            ),
-                          ),
-                          subtitle: Text(
-                            'Peso: ${tarefas[index].peso}',
-                            style: const TextStyle(color: Colors.black54),
-                          ),
-                          trailing: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              IconButton(
-                                  onPressed: () {},
-                                  icon: const Icon(Icons.settings)),
-                              IconButton(
-                                  onPressed: () async {
-                                    await presenter.deleteTarefaFirebase(
-                                        tarefas[index].id);
+                        Column(
+                          children: [
+                            ListTile(
+                              contentPadding: const EdgeInsets.all(15),
+                              leading: CircleAvatar(
+                                backgroundColor: Colors.blueAccent,
+                                child: Text(
+                                  tarefas[index].periodo,
+                                  style: const TextStyle(color: Colors.white),
+                                ),
+                              ),
+                              title: Text(
+                                tarefas[index].titulo,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              subtitle: Text(
+                                'Tipo: ${tarefas[index].tipo}',
+                                style: const TextStyle(color: Colors.black54),
+                              ),
+                              trailing: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  IconButton(
+                                    icon: const Icon(Icons.save,
+                                        color: Colors.black),
+                                    onPressed: () async {
+                                      await presenter.updateTarefa(
+                                          tarefas[index].id, notaTarefa);
+                                    },
+                                  ),
+                                  IconButton(
+                                      onPressed: () async {
+                                        await presenter.deleteTarefaFirebase(
+                                            tarefas[index].id);
 
-                                    presenter.fetchTarefasFirebase();
-                                  },
-                                  icon: const Icon(Icons.delete,
-                                      color: Colors.red))
-                            ],
-                          ),
+                                        presenter.fetchTarefasFirebase();
+                                      },
+                                      icon: const Icon(Icons.delete,
+                                          color: Colors.red))
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
+                        Column(
+                          children: [
+                            ListTile(
+                              contentPadding:
+                                  const EdgeInsets.fromLTRB(70, 0, 0, 0),
+                              title: Text(
+                                'Peso: ${tarefas[index].peso}',
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              subtitle: Text(
+                                'Nota: ${tarefas[index].nota}',
+                                style: const TextStyle(color: Colors.black54),
+                              ),
+                            ),
+                            Container(
+                              width: 80,
+                              child: Padding(
+                                padding: const EdgeInsets.all(20),
+                                child: TextField(
+                                  decoration:
+                                      const InputDecoration(labelText: 'Nota'),
+                                  keyboardType: TextInputType.number,
+                                  onChanged: (value) {
+                                    notaTarefa = double.tryParse(value)!;
+                                  },
+                                ),
+                              ),
+                            )
+                          ],
+                        )
                       ],
                     ));
               },
